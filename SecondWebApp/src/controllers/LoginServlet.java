@@ -1,22 +1,30 @@
-package test;
+package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.MyDAO;
+
 /**
  * Servlet implementation class HelloServlet
  */
 @WebServlet("/xyz")
-public class HelloServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-    public HelloServlet() {
+    public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,11 +42,20 @@ public class HelloServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		String uid=request.getParameter("uid");
 		String pass=request.getParameter("password");
-		if(uid.equalsIgnoreCase("admin") && pass.equals("admin"))
-         out.println("<h1>Login Success</h1>");
-         else
-        	 out.println("<h1>Login Fail</h1>");
-		
+		  MyDAO m=new MyDAO();
+		 int y=m.loginCheck(uid,pass);
+				if(y==1)
+				response.sendRedirect("AdminHome.jsp");
+					//out.println("login success");
+				else
+				{
+			 RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+             request.setAttribute("msg","Login Fail, try again...");
+			 rd.forward(request,response);
+					
+				}
+								
+				
 	}
 
 }
