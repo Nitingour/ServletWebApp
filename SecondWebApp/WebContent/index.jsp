@@ -31,7 +31,7 @@
 <div class="row">
   <div class="col-sm-4">
   
- <form action="xyz" method="post">
+ <form action="xyz" method="post" >
   <div class="form-group">
     <label for="email">LoginID:</label>
     <input type="TEXT" name="uid"  class="form-control" id="email">
