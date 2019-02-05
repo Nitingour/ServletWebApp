@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.MyDAO;
 
@@ -45,8 +46,12 @@ public class LoginServlet extends HttpServlet {
 		  MyDAO m=new MyDAO();
 		 int y=m.loginCheck(uid,pass);
 				if(y==1)
-				response.sendRedirect("AdminHome.jsp");
-					//out.println("login success");
+				{
+		HttpSession session=request.getSession();
+		session.setMaxInactiveInterval(30000);
+		session.setAttribute("UID",uid);
+		response.sendRedirect("AdminHome.jsp");
+				}	//out.println("login success");
 				else
 				{
 			 RequestDispatcher rd=request.getRequestDispatcher("index.jsp");

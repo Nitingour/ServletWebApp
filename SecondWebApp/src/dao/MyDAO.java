@@ -58,6 +58,7 @@ PreparedStatement ps=con.prepareStatement("insert into EMp(ename,salary,address,
 					{
 					EmployeeBean e=new EmployeeBean();
 					e.setEid(rs.getInt("eid"));
+					e.setSalary(rs.getInt("salary"));
 					e.setName(rs.getString("ename"));
 			        e.setAddress(rs.getString("address"));
 			        e.setCity(rs.getString("city"));
@@ -84,6 +85,52 @@ PreparedStatement ps=con.prepareStatement("delete from emp where eid=?");
 				System.out.println(ex);
 			}
 		return x;
+	}
+
+	public EmployeeBean getEmpByEid(int eid) {
+		EmployeeBean e=new EmployeeBean();
+		 Connect c=new Connect();
+			try(Connection con= c.start()){
+	 PreparedStatement ps=con.prepareStatement("select * from Emp where eid=?");
+	 ps.setInt(1, eid);
+				   ResultSet rs=ps.executeQuery();
+					if(rs.next())
+					{
+				
+					e.setEid(rs.getInt("eid"));
+					e.setName(rs.getString("ename"));
+					e.setSalary(rs.getDouble("salary"));
+			        e.setAddress(rs.getString("address"));
+			        e.setCity(rs.getString("city"));
+			        e.setGender(rs.getString("gender"));
+			    	}
+			}
+			catch(SQLException ex)
+					{
+						System.out.println(ex);
+					}
+		
+		return e;
+	}
+
+	public int updateEmp(EmployeeBean e) {
+		int x=0;
+		Connect c=new Connect();
+		try(Connection con= c.start()){
+	PreparedStatement ps=con.prepareStatement("update Emp set ename=?,salary=?,address=?,city=?,gender=? where eid=?");
+		ps.setString(1,e.getName());
+		ps.setDouble(2,e.getSalary());
+		ps.setString(3,e.getAddress());
+		ps.setString(4,e.getCity());
+		ps.setString(5,e.getGender());
+		ps.setInt(6,e.getEid());
+	      x=ps.executeUpdate();
+				}catch(SQLException ex)
+				{
+					System.out.println(ex);
+				}
+		
+			return x;
 	}
 	
 }

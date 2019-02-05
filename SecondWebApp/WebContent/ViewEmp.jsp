@@ -39,7 +39,9 @@
 	  <td><%=e.getCity()%></td>
 	  <td><%=e.getGender()%></td>
 	  <td><%=e.getAddress()%></td>
+	    <td><a href="EmpUpdateController?empid=<%=e.getEid()%>" class="glyphicon glyphicon-edit"></a></td>
 	    <td><a href="EmpDelController?empid=<%=e.getEid()%>" class="glyphicon glyphicon-remove" onclick="return confirm('Do you really want to Delete?')"  ></a></td>
+
       </tr>
    <%
    }
