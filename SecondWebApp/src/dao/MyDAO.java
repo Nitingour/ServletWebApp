@@ -132,5 +132,21 @@ PreparedStatement ps=con.prepareStatement("delete from emp where eid=?");
 		
 			return x;
 	}
+
+	public int checkEname(String en) {
+	int x=0;
+	Connect c=new Connect();
+	try(Connection con= c.start()){
+PreparedStatement ps=con.prepareStatement("select * from Emp where ename=?");
+	ps.setString(1,en);
+		   ResultSet rs=ps.executeQuery();
+			if(rs.next())
+		    x=1;
+	}catch(SQLException e)
+			{
+				System.out.println(e);
+			}
+		return x;
+	}
 	
 }

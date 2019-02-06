@@ -6,6 +6,27 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
  <%@include file="header.jsp" %>
+ 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#name").change(function(){
+	var edata = "ename="+$("#name").val();
+		$.ajax({
+		url:  'CheckEnameController',
+         data:edata,
+		type:'post',
+		success:function(response) {
+		           $("#msg").html(response);
+		    if(response.includes('Already'))
+		    	$("#name").val("");
+		}
+		    }); //AJAX end
+		});  //change end
+		});  //ready end
+
+ </script>
+ 
 </head>
 <body>
 
@@ -34,7 +55,7 @@
  
   <div class="form-group">
     <label for="pwd">Name:</label>
-    <input type="text" name="name" class="form-control" id="pwd">
+    <input type="text" name="name" class="form-control" id="name" required> <span id="msg"></span>
   </div>
    <div class="form-group">
     <label for="pwd">Salary:</label>
